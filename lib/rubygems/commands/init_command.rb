@@ -74,7 +74,7 @@ Rake::TestTask.new do |t|
 end
 
 desc "Run tests"
-tas :default => :test
+task :default => :test
       RAKEFILE
     end
   end

@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "gem-init"
   # s.version     = GemGrep::VERSION
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.authors     = ["Marshall Huss"]
   s.email       = "mwhuss@gmail.com"
   s.homepage    = "http://github.com/mwhuss/git-init"
