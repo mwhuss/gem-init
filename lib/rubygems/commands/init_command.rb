@@ -88,14 +88,9 @@ task :default => :test
   end
 
   # def defaults_str # :nodoc:
-  #   "--local --columns name,summary,author --fields name --no-installed"
   # end
 
   # def description # :nodoc:
-  #   'Enhances search command by providing options to search (--fields) and display (--columns) ' +
-  #  'gemspec attributes. Results are displayed in an ascii table. Gemspec attributes can be specified '+
-  #  'by the first unique string that it starts with i.e. "su" for "summary". To specify multiple gemspec attributes, delimit ' +
-  #  "them with commas. Gemspec attributes available to options are: #{self.class.valid_gemspec_columns.join(', ')}."
   # end
 
 end
