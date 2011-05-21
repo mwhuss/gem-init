@@ -11,13 +11,25 @@ class Gem::Commands::InitCommand < Gem::Command
           
   end
   
+  def description # :nodoc:
+    'Rubygems plugin to assist in creating a barebones gem'
+  end
+  
+  def arguments # :nodoc:
+    "GEMNAME          name of your new rubygem"
+  end
+
+  def usage # :nodoc:
+    "#{program_name} GEMNAME"
+  end
+  
   def execute
-    gem_name = get_one_optional_argument
+    gem_name = get_new_gem_name
     
     gem_exists = options[:skip_check].nil? ? gem_exists?(gem_name) : false
 
     if gem_exists
-      say "That gem already exists on rubygems.org! Find a new name or use the -s option to skip the check"
+      say "The #{gem_name} gem already exists on rubygems.org!\n\nChoose a new name or use the -s option to skip the check"
     else
       create_gemspec(gem_name)
       create_ruby_file(gem_name)
@@ -27,11 +39,7 @@ class Gem::Commands::InitCommand < Gem::Command
   
   def gem_exists?(gem_name)
     response = RestClient.get("http://rubygems.org/api/v1/gems/#{gem_name}.json") do |response, request, result|
-      if response.code == 404
-        return false
-      else
-        return true
-      end
+      return response.code != 404
     end
   end
   
@@ -40,7 +48,7 @@ class Gem::Commands::InitCommand < Gem::Command
       f.puts <<-GEMSPEC
 Gem::Specification.new do |s|
   s.name        = "#{gem_name}"
-  s.version     = '0.0.1'
+  s.version     = '0.1.0'
   s.authors     = ["YOURNAME"]
   s.email       = "TODO YOUREMAIL"
   s.homepage    = "TODO HOMEPAGE"
@@ -48,6 +56,9 @@ Gem::Specification.new do |s|
   s.description = "TODO DESCRIPTION"
   s.required_rubygems_version = ">= 1.3.6"
   s.files = ['lib/rubygems_plugin.rb']
+  # s.add_dependency 'some-gem'
+  # s.extra_rdoc_files = ['README.md', 'LICENSE']
+  # s.license = 'MIT'
 end
       GEMSPEC
     end
@@ -79,18 +90,18 @@ task :default => :test
     end
   end
   
-  def arguments # :nodoc:
-    "NAME          name of your new rubygem"
+  # Taken from RubyGems get_one_gem_name
+  def get_new_gem_name
+    args = options[:args]
+    if args.nil? or args.empty?
+      fail Gem::CommandLineError,
+        "Please specify a gem name on the command line (e.g. gem init GEMNAME)"
+    end
+    if args.size > 1
+      fail Gem::CommandLineError,
+        "Too many gem names (#{args.join(', ')}); please specify only one"
+    end
+    args.first
   end
-
-  def usage # :nodoc:
-    "#{program_name} NAME"
-  end
-
-  # def defaults_str # :nodoc:
-  # end
-
-  # def description # :nodoc:
-  # end
-
+  
 end
