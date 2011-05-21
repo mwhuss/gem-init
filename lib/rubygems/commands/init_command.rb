@@ -55,7 +55,7 @@ Gem::Specification.new do |s|
   s.summary     = "TODO SUMMARY"
   s.description = "TODO DESCRIPTION"
   s.required_rubygems_version = ">= 1.3.6"
-  s.files = ['lib/rubygems_plugin.rb']
+  s.files = ["lib/#{gem_name}.rb"]
   # s.add_dependency 'some-gem'
   # s.extra_rdoc_files = ['README.md', 'LICENSE']
   # s.license = 'MIT'
