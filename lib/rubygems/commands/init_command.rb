@@ -38,7 +38,7 @@ class Gem::Commands::InitCommand < Gem::Command
   end
   
   def gem_exists?(gem_name)
-    response = RestClient.get("http://rubygems.org/api/v1/gems/#{gem_name}.json") do |response, request, result|
+    response = RestClient.get("https://rubygems.org/api/v1/gems/#{gem_name}.json") do |response, request, result|
       return response.code != 404
     end
   end
